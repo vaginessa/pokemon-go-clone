@@ -1,6 +1,21 @@
 @import "_fonts";
 @import "_material";
 
+.mdl-layout__content {
+  display: flex;
+  flex-direction: column;
+}
+.page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.page-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 #map {
   height: 500px;
+  flex: 1;
 }
