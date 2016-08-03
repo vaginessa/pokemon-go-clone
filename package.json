@@ -1,0 +1,28 @@
+{
+  "name": "pokemon-go-clone",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:js": "browserify src/js/main.js -t [ babelify --presets [ es2015 ] ] --outfile public/app.js -v",
+    "prebuild:sass": "cp node_modules/material-design-lite/dist/material.css src/sass/_material.scss",
+    "build:sass": "node-sass src/sass/styles.scss public/app.css",
+    "build": "npm run build:js && npm run build:sass",
+    "build:watch": "watch 'npm run build' src/",
+    "serve": "ws -d public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joe Strong <joestrong@gmail.com> (https://www.joestrong.co.uk/)",
+  "license": "MIT",
+  "dependencies": {
+    "material-design-lite": "1.1.*"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.0.1",
+    "local-web-server": "^1.2.6",
+    "material-design-lite": "^1.1.3",
+    "node-sass": "^3.8.0",
+    "watch": "^0.19.1"
+  }
+}
