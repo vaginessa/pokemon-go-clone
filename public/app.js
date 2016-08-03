@@ -3984,26 +3984,25 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _MapController = require("./MapController.js");
+
+var _MapController2 = _interopRequireDefault(_MapController);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ApplicationController = function () {
   function ApplicationController() {
     _classCallCheck(this, ApplicationController);
 
-    this.mapEl = document.getElementById('map');
+    this.MapController = new _MapController2.default();
   }
 
   _createClass(ApplicationController, [{
     key: "initMap",
     value: function initMap() {
-      var map = new google.maps.Map(this.mapEl, {
-        center: {
-          lat: -34.397,
-          lng: 150.644
-        },
-        scrollwheel: false,
-        zoom: 8
-      });
+      this.MapController.initMap();
     }
   }]);
 
@@ -4012,7 +4011,74 @@ var ApplicationController = function () {
 
 exports.default = ApplicationController;
 
-},{}],3:[function(require,module,exports){
+},{"./MapController.js":3}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var MapController = function () {
+  function MapController() {
+    _classCallCheck(this, MapController);
+
+    this.mapEl = document.getElementById('map');
+    this.playerLocation = { lat: -34.397, lng: 150.644 };
+    this.locationInterval = setInterval(this.updateLocation.bind(this), 500);
+  }
+
+  _createClass(MapController, [{
+    key: 'initMap',
+    value: function initMap() {
+      this.map = new google.maps.Map(this.mapEl, {
+        center: this.playerLocation,
+        draggable: false,
+        scrollwheel: false,
+        streetViewControl: false,
+        zoomControl: false,
+        mapTypeControl: false,
+        zoom: 19
+      });
+      var markerImage = {
+        url: '/images/player-icon.png',
+        size: new google.maps.Size(17, 25),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(8, 25)
+      };
+      this.playerMarker = new google.maps.Marker({
+        position: this.playerLocation,
+        icon: markerImage,
+        map: this.map
+      });
+    }
+  }, {
+    key: 'updateLocation',
+    value: function updateLocation() {
+      var _this = this;
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          _this.playerLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          _this.map.panTo(_this.playerLocation);
+          _this.playerMarker.setPosition(_this.playerLocation);
+        });
+      }
+    }
+  }]);
+
+  return MapController;
+}();
+
+exports.default = MapController;
+
+},{}],4:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4031,4 +4097,4 @@ global.googleMapsCallback = function () {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../node_modules/material-design-lite/dist/material.js":1,"./ApplicationController.js":2}]},{},[3]);
+},{"../../node_modules/material-design-lite/dist/material.js":1,"./ApplicationController.js":2}]},{},[4]);

@@ -1,19 +1,13 @@
 "use strict";
+import MapController from './MapController.js';
 
 export default class ApplicationController {
 
   constructor() {
-    this.mapEl = document.getElementById('map');
+    this.MapController = new MapController();
   }
 
   initMap() {
-    const map = new google.maps.Map(this.mapEl, {
-      center: {
-        lat: -34.397,
-        lng: 150.644
-      },
-      scrollwheel: false,
-      zoom: 8
-    });
+    this.MapController.initMap();
   }
 }
