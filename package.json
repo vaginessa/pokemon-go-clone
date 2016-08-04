@@ -7,7 +7,7 @@
     "prebuild:sass": "cp node_modules/material-design-lite/dist/material.css src/sass/_material.scss",
     "build:sass": "node-sass src/sass/styles.scss public/app.css",
     "build": "npm run build:js && npm run build:sass",
-    "build:watch": "watch 'npm run build' src/",
+    "build:watch": "watch 'npm run build' src/js/",
     "serve": "ws -d public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
