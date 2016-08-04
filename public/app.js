@@ -3984,7 +3984,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _MapController = require("./MapController.js");
+var _MapController = require('./MapController.js');
 
 var _MapController2 = _interopRequireDefault(_MapController);
 
@@ -3997,12 +3997,27 @@ var ApplicationController = function () {
     _classCallCheck(this, ApplicationController);
 
     this.MapController = new _MapController2.default();
+    this.registerServiceWorker();
   }
 
+  // Called from Google Maps API Callback
+
+
   _createClass(ApplicationController, [{
-    key: "initMap",
+    key: 'initMap',
     value: function initMap() {
       this.MapController.initMap();
+    }
+  }, {
+    key: 'registerServiceWorker',
+    value: function registerServiceWorker() {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('service-worker.js', { scope: './' }).then(function (r) {
+          console.log('registered service worker');
+        }).catch(function (whut) {
+          console.error('could not register service worker');
+        });
+      });
     }
   }]);
 
