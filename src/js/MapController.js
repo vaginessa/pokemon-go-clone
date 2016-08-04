@@ -6,6 +6,7 @@ export default class MapController {
     this.mapEl = document.getElementById('map');
     this.playerLocation = { lat: -34.397, lng: 150.644 };
     this.locationInterval = setInterval(this.updateLocation.bind(this), 500);
+    this.pokemonInterval = setInterval(this.showPokemon.bind(this), 2000);
   }
 
   initMap() {
@@ -22,7 +23,7 @@ export default class MapController {
       url: '/images/player-icon.png',
       size: new google.maps.Size(17, 25),
       origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(8, 25),
+      anchor: new google.maps.Point(8, 25)
     };
     this.playerMarker = new google.maps.Marker({
       position: this.playerLocation,
@@ -41,6 +42,14 @@ export default class MapController {
         this.map.panTo(this.playerLocation);
         this.playerMarker.setPosition(this.playerLocation);
       });
+    }
+  }
+
+  showPokemon() {
+    console.log('phone: vibrate');
+    navigator.vibrate = navigator.vibrate;
+    if (navigator.vibrate) {
+      navigator.vibrate(100);
     }
   }
 }
