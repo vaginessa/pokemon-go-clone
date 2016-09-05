@@ -4044,6 +4044,7 @@ var MapController = function () {
     this.mapEl = document.getElementById('map');
     this.playerLocation = { lat: -34.397, lng: 150.644 };
     this.locationInterval = setInterval(this.updateLocation.bind(this), 500);
+    this.pokemonInterval = setInterval(this.showPokemon.bind(this), 5000);
   }
 
   _createClass(MapController, [{
@@ -4084,6 +4085,15 @@ var MapController = function () {
           _this.map.panTo(_this.playerLocation);
           _this.playerMarker.setPosition(_this.playerLocation);
         });
+      }
+    }
+  }, {
+    key: 'showPokemon',
+    value: function showPokemon() {
+      console.log('phone: vibrate');
+      navigator.vibrate = navigator.vibrate;
+      if (navigator.vibrate) {
+        navigator.vibrate(500);
       }
     }
   }]);
