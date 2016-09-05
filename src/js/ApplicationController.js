@@ -1,11 +1,13 @@
 "use strict";
 import MapController from './MapController.js';
+const io = require('socket.io-client');
 
 export default class ApplicationController {
 
   constructor() {
     this.MapController = new MapController();
     this.registerServiceWorker();
+    this.testWebSockets();
   }
 
   // Called from Google Maps API Callback
@@ -23,5 +25,10 @@ export default class ApplicationController {
           console.error('could not register service worker');
         });
     });
+  }
+
+  testWebSockets() {
+    const socket = io.connect('//localhost:3000');
+    socket.emit('test');
   }
 }
